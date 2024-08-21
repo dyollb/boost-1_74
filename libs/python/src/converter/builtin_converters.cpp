@@ -32,7 +32,9 @@ shared_ptr_deleter::~shared_ptr_deleter() {}
 
 void shared_ptr_deleter::operator()(void const*)
 {
+    PyGILState_STATE gil = PyGILState_Ensure();
     owner.reset();
+    PyGILState_Release(gil);
 }
 
 namespace
